@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { fetchPokemon, selectState } from "../redux/pokemonSlice";
 import { useSelector, useDispatch } from "react-redux";
-import PokemonCard from "./components/PokemonCard";
+import PokemonCard from "../components/pokemonCard/PokemonCard";
 
 const Pokemon = () => {
   const data = useSelector(selectState);
