@@ -12,10 +12,16 @@ export const fetchPokemon = createAsyncThunk(
   async () => {
     const { data } = await getPokemons();
 
-    return data.results.map(pokemon => ({
+    const pokemonFavourites = [
+      "https://pokeapi.co/api/v2/pokemon/2/",
+      "https://pokeapi.co/api/v2/pokemon/4/",
+      "https://pokeapi.co/api/v2/pokemon/6/",
+    ];
+
+    return data.results.map((pokemon) => ({
       ...pokemon,
       image: PokemonImages.getSprite(pokemon.name),
-      favourite: false,
+      favourite: pokemonFavourites.find((element) => element === pokemon.url),
     }));
   }
 );
@@ -39,7 +45,7 @@ const pokemonSlice = createSlice({
       });
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchPokemon.pending, (state, action) => {
         state.isLoading = true;
@@ -57,5 +63,5 @@ const pokemonSlice = createSlice({
   },
 });
 export const { addFavourite, removeFavourite } = pokemonSlice.actions;
-export const selectState = state => state.pokemon.pokemonList;
+export const selectState = (state) => state.pokemon.pokemonList;
 export default pokemonSlice.reducer;
